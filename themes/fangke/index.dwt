@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="RSS|{$page_title}" href="{$feed_url}" />
+{* 包含脚本文件 *}
+{insert_scripts files='common.js,index.js'}
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header_index.lbi" --><!-- #EndLibraryItem -->
+ <!-- #BeginLibraryItem "/library/index_ad.lbi" --><!-- #EndLibraryItem -->
+<div class="block">
+  <div class="content">
+    <div class="contentBody">
+      
+
+      <div class="mainBody" style=" margin-top:20px;"> 
+      <img src="images/howto.jpg" width="1200" height="150" /> 
+	  <!-- TemplateBeginEditable name="首页主区域一" -->
+<!-- TemplateEndEditable -->
+        <div class="title_list">
+          <div class="title_txt"> 精彩房源 </div>
+        </div>
+        <!-- #BeginLibraryItem "/library/recommend_hot.lbi" --> <!-- #EndLibraryItem -->
+
+      </div>
+
+      <div > <div class="hot">
+	<ul>
+    	<li class="ho1"><span><i></i></span><h2>覆盖全城</h2>交通便利,地铁0距离</li>
+    	<li class="ho2"><span><i></i></span><h2>底价公开</h2>高性价比,极具竞争力</li>
+        <li class="ho3"><span><i></i></span><h2>品质管控</h2>高档电梯公寓,专业运维团队</li>
+        <li class="ho4"><span><i></i></span><h2>安全保障</h2>租客认证,小区24小时安保</li>
+        <li class="ho5"><span><i></i></span><h2>社交人脉</h2>白领社交圈,收获可信赖人脉</li>
+        
+    </ul>
+    
+</div></div>
+<!-- TemplateBeginEditable name="首页主区域二" -->
+<!-- TemplateEndEditable -->
+      <div class="blank" style="height:0"></div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="blank5"></div>
+<div class="footer">
+<div class="footerBody">
+<Div class="block">
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+</Div>
+</div>
+</div>
+
+</body>
+</html>

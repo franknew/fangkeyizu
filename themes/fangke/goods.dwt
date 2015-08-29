@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="{$keywords}" />
+<meta name="Description" content="{$description}" />
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>{$page_title}</title>
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="icon" href="animated_favicon.gif" type="image/gif" />
+<link href="{$ecs_css_path}" rel="stylesheet" type="text/css" />
+{* 包含脚本文件 *}
+{insert_scripts files='common.js,left_goodslist.js'}
+<script>
+function changeAtt(t) {
+t.lastChild.checked='checked';
+for (var i = 0; i<t.parentNode.childNodes.length;i++) {
+        if (t.parentNode.childNodes[i].className == 'cattsel') {
+            t.parentNode.childNodes[i].className = '';
+        }
+    }
+t.className = "cattsel";
+changePrice();
+}
+</script>
+<script type="text/javascript">
+function $id(element) {
+  return document.getElementById(element);
+}
+//切屏--是按钮，_v是内容平台，_h是内容库
+function reg(str){
+  var bt=$id(str+"_b").getElementsByTagName("h2");
+  for(var i=0;i<bt.length;i++){
+    bt[i].subj=str;
+    bt[i].pai=i;
+    bt[i].style.cursor="pointer";
+    bt[i].onclick=function(){
+      $id(this.subj+"_v").innerHTML=$id(this.subj+"_h").getElementsByTagName("blockquote")[this.pai].innerHTML;
+      for(var j=0;j<$id(this.subj+"_b").getElementsByTagName("h2").length;j++){
+        var _bt=$id(this.subj+"_b").getElementsByTagName("h2")[j];
+        var ison=j==this.pai;
+        _bt.className=(ison?"":"h2bg");
+      }
+    }
+  }
+  $id(str+"_h").className="none";
+  $id(str+"_v").innerHTML=$id(str+"_h").getElementsByTagName("blockquote")[0].innerHTML;
+}
+
+</script>
+
+</head>
+<body>
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem --> {insert_scripts files='magiczoom.js,miqi_goods.js,magiczoomplus.js'} 
+<script>
+$(function(){
+	/*放大镜缩略图左右切换效果*/
+	$("#detail_img_slider").slide({
+			mainCell:"#J_tabSlider ul",
+			vis:5,
+			prevCell:".pre_btn",
+			nextCell:".next_btn",
+			effect:"leftLoop",
+			pager:true
+	})
+	/*放大镜缩略图点击选中效果*/
+	$("#J_tabSlider ul li img").click(function(){
+		$("#J_tabSlider ul li").removeClass("cur");
+		$(this).parent().addClass("cur");
+		$("#J_prodImg").attr("src", $(this).attr("url"));
+	})	
+})
+
+$(window).scroll(function() {
+        if ($(window).scrollTop() >= 600) 
+		{
+			$(".asideRight h1").css("position","fixed");
+			$(".Right_b").css("position","fixed");
+			$(".Right_b").css("top","45px");
+			$(".Right_b").css("width","278px");
+			$(".Right_b").css("background-color","white");
+        }else{
+            $(".asideRight h1").css("position","");
+            $(".Right_b").css("position","");
+			$(".Right_b").css("top","");
+			$(".Right_b").css("width","");
+			$(".Right_b").css("background-color","");
+       }  
+    });
+</script>
+<!--当前位置 start-->
+<div class="content_title">
+  <div class="searchBody block">
+    <div id="ur_here"> <!-- #BeginLibraryItem "/library/ur_here.lbi" --><!-- #EndLibraryItem --> </div>
+  </div>
+</div>
+<!--当前位置 end-->
+<div class="content_detailed">
+  <div class="contentBody" >
+    <div class="mainBody">
+    <div class="center_title"><a>{$goods.goods_style_name}</a>  <b style="margin-left:100px; color:#F60"> <!--本店售价--> 租金 <font  id="ECS_SHOPPRICE">{$goods.shop_price_formated} /月</font> </b></div>
+    <!-- #BeginLibraryItem "/library/goods_gallery.lbi" --><!-- #EndLibraryItem --> 
+      
+      <div class="asideRight">
+      <!-- 9666 -->
+    	<h1><i></i>预约400-667-4066</h1>
+    	 
+            <div class="Right_b" style="z-index:3;">
+
+            	<div class="xinxi">
+               <h3>{$goods.goods_style_name}</h3>
+               
+                
+                <p style="color:#F60; font-size:16px; display:inline">租金 {$goods.shop_price_formated} /月   <!-- {if $cfg.show_marketprice} 市场价格-->
+       市场价 <font class="market">{$goods.market_price} /月</font><br />
+       <!-- {/if} --></p>
+
+	      			<p>
+	      			{$goods.goods_brief}
+					</p>
+                    <p>
+              <!-- {if $goods.goods_brand neq "" and $cfg.show_brand} -->
+       <span>租赁方式:<span> {$goods.goods_brand}
+       <!--{/if}--></p> 
+       <p><span>所属区域:<span> {$thiscat_name}</p>
+	      		</div>
+                <div class="clear"></div>
+                
+            </div>
+    </div>
+
+
+      <div class="blank"></div>
+      
+      
+      <div class="blank15"></div>
+     <div id="goodsInfo">  
+            <div class="textInfo">{$goods.goods_desc}</div>
+     </div>
+ <div class="blank5"></div>
+       
+    </div>
+  </div>
+  
+  
+  
+</div>
+<div class="blank5"></div>
+<div class="footer">
+  <div class="footerBody">
+    <Div class="block"> 
+      
+      <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+      
+      </Div>
+  </div>
+</div>
+
+</body>
+
+</html>

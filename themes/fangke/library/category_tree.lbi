@@ -1,0 +1,27 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<div class="navBar">
+
+  <div id="cate">
+   <!--{foreach from=get_categories_tree() item=cat}-->
+
+		<h1  class="h1">
+		<dt ><a href="{$cat.url}">{$cat.name|escape:html}<span class="searchLeft"></span></a> </dt>
+		</h1>
+		<ul style="display:block">
+		 <!--{foreach from=$cat.cat_id item=child}-->
+         <li><a href="{$child.url}" {if $child.id eq $category}class="current"{/if}>{$child.name|escape:html}</a></li>
+          <!--{foreach from=$child.cat_id item=childer}-->
+		<li><a href="{$childer.url}" {if $childer.id eq $category}class="current"{/if}>{$childer.name|escape:html}</a></li>
+         <!--{/foreach}-->
+		<!--{/foreach}-->
+		</ul>
+		<div style="clear:both"></div>
+	
+
+	<!--{/foreach}--> 
+</div>
+
+</div>
+<div class="blank"></div>
+<div class="blank"></div>

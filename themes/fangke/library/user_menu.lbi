@@ -1,0 +1,17 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="accountSideTop"> <a href="user.php" {if $action eq 'default'}class="curs"{/if}> {$lang.label_welcome}</a> </div>
+
+<dl class="accountSideOption1">
+  <dt class="transaction_manage">会员中心</dt>
+  <dd>
+    <ul>
+      <li> <a href="user.php?act=profile"{if $action eq 'profile'}class="curs"{/if}> {$lang.label_profile}</a></li>
+      <li> <a href="user.php?act=message_list"{if $action eq 'message_list'}class="curs"{/if}> {$lang.label_message}</a></li>
+      
+    </ul>
+  </dd>
+</dl>
+
+
+<div class="blank"></div>
+<a href="user.php?act=logout" ><img src="../images/bnt_sign.gif"></a> 

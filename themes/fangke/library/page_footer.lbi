@@ -1,0 +1,125 @@
+﻿<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+
+<!--{if $helps}-->
+<div class="footTop "> 
+
+    <ul>
+    <li  class="foot_help0"><a>区域找房</a></li>
+<!--{foreach from=get_categories_tree() item=cat}-->
+     <li><a href="{$cat.url}">{$cat.name|escape:html}</a></li>
+<!--{/foreach}--> 
+      </ul>
+  <!-- {foreach from=$helps item=help_cat name=no} -->
+  <ul>
+    <li  class="foot_help foot_help_{$smarty.foreach.no.iteration} "><a href='{$help_cat.cat_id}' title="{$help_cat.cat_name}">{$help_cat.cat_name}</a></li>
+    <!-- {foreach from=$help_cat.article item=item} -->
+    <li><a href="{$item.url}" title="{$item.title|escape:html}">{$item.short_title}</a></li>
+    <!-- {/foreach} -->
+  </ul>
+  <!-- {/foreach} --> 
+</div>
+<!--{/if}-->
+
+<div class="footer_txt">
+  <p class="foottel">租房客服热线：{$service_phone} (7x24小时为你服务)</p>
+  <p class="lightGrey">{$keywords} {$copyright}</p>
+</div>
+
+<!--友情链接 start--> 
+<!--{if $img_links  or $txt_links }-->
+<div id="bottomNav" class="box">
+  <div class="box_1">
+    <div class="links clearfix"> 
+      <!--开始图片类型的友情链接{foreach from=$img_links item=link}--> 
+      <a href="{$link.url}" target="_blank" title="{$link.name}"><img src="{$link.logo}" alt="{$link.name}" border="0" /></a> 
+      <!--结束图片类型的友情链接{/foreach}--> 
+      <!-- {if $txt_links} --> 
+      <!--开始文字类型的友情链接{foreach from=$txt_links item=link}--> 
+      [<a href="{$link.url}" target="_blank" title="{$link.name}">{$link.name}</a>] 
+      <!--结束文字类型的友情链接{/foreach}--> 
+      <!-- {/if} --> 
+    </div>
+  </div>
+</div>
+<!--{/if}--> 
+<!--友情链接 end-->
+
+
+
+<!--底部导航 start-->
+
+<div id="bottomNav" class="box" style="display:none">
+  <div class="bNavList clearfix">
+    <div class="f_l"> 
+      <!-- {if $navigator_list.bottom} --> 
+      <!-- {foreach name=nav_bottom_list from=$navigator_list.bottom item=nav} --> 
+      <a href="{$nav.url}" <!-- {if $nav.opennew eq 1} --> target="_blank" <!-- {/if} -->>{$nav.name}</a> 
+      <!-- {if !$smarty.foreach.nav_bottom_list.last} --> 
+      - 
+      <!-- {/if} --> 
+      <!-- {/foreach} --> 
+      <!-- {/if} --> 
+    </div>
+  </div>
+</div>
+<!--底部导航 end-->
+<div class="blank"></div>
+<!--版权 start-->
+
+
+<div id="topcontrol" style="width:60px;">
+  <div class="nreturn"> <a target="_blank" id="sider_talkonline" href="category.php?id=18" class="ntel buy" style="display: block;">我要租房</a> <!-- QQ 号码 {foreach from=$qq item=im} --> 
+    <!--<a target="_blank" id="sider_talkonline" href="http://wpa.qq.com/msgrd?v=3&uin={$im}&site={$shop_name}&menu=yes" class="ntel kf" style="display: block;">QQ客服</a>--> 
+    <!-- {/foreach} 结束QQ号码 -->  
+    
+    <div id="sider_addmark" href="javascript:void(0);" class="ntel sider_addmark" style="display: block;"><script>
+function MM_over(mmObj) {
+	var mSubObj = mmObj.getElementsByTagName("div")[0];
+	mSubObj.style.display = "block";
+	mSubObj.style.backgroundColor = "#fff";
+}
+function MM_out(mmObj) {
+	var mSubObj = mmObj.getElementsByTagName("div")[0];
+	mSubObj.style.display = "none";
+	
+}
+</script>
+<div onmouseover="MM_over(this)" onmouseout="MM_out(this)" style="width:270px;position:relative;" >二维码
+	<div style="width:270px;height:270px;display:none;position:absolute;right:270px;top:-100px;z-inde:555;"><img src="../images/weixin.jpg" width="258" height="258"></div>
+</div></div> <a id="sider_returntop" href="javascript:void(0);" class="ntel sider_returntop" style="display: block;">回顶部</a> </div>
+</div>
+<script>
+$(function(){
+	isIe6 = false;
+	
+	if ('undefined' == typeof(document.body.style.maxHeight)) {
+		isIe6 = true;
+	}
+
+	var offset = $("#topcontrol").offset();		
+	var bottom = $("#topcontrol").css("bottom");		
+	$(window).scroll(function(){
+		if ($(window).scrollTop() > 20){
+			$("#topcontrol").fadeIn(800);
+			
+			if(isIe6)
+			{			
+				$("#topcontrol").css("position","absolute")	
+				$("#topcontrol").css("bottom",bottom)
+			}
+		}
+		else
+		{
+			$("#topcontrol").fadeOut(500);
+		}
+		
+	});
+	
+	$("#topcontrol #sider_returntop").click(function(){
+		$('body,html').animate({scrollTop:0},500);
+		return false;
+	});
+
+})
+</script>

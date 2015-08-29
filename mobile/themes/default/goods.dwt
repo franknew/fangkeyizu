@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta charset="utf-8" />
+<title>{$page_title}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+{insert_scripts files='common.js'}
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery-1.4.4.min.js"></script>
+</head>
+
+<body>
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="category.php?id=18"> 返回 </a> </div>
+  <h1> 房源详情 </h1>
+  <div class="header_r header_search"> <a class="ico_15" href="ectouch.php?act=share&content={$goods.goods_name}&pic={$goods.original_img}"> 分享 </a> </div>
+</header>
+
+<!--房源图 s---> 
+<script src="{$ectouch_themes}/js/TouchSlide.js"></script>
+<section class="goods_slider">
+  <div class="blank2"></div>
+  <div id="slideBox" class="slideBox">
+    <div class="scroller"> 
+      <!--<div><a href="javascript:showPic()"><img src="{$goods.goods_thumb}"  alt="{$goods.goods_name}" /></a></div>-->
+      <ul>
+        <li><a href="javascript:showPic()"><img src="{$site_url}{$goods.original_img}" alt="" width="100%"/></a></li>
+        <!--{if $pictures}--> 
+        <!-- {foreach from=$pictures item=picture name=no}--> 
+        <!-- {if $smarty.foreach.no.iteration > 1}  -->
+        <li><a href="javascript:showPic()"><img alt="" src="{$site_url}{$picture.img_url}"/></a></li>
+        <!-- {/if}--> 
+        <!--{/foreach}--> 
+        <!--{/if}-->
+      </ul>
+    </div>
+    <div class="icons">
+      <ul>
+        <i class="current"></i> 
+        <!--{if $pictures}--> 
+        <!-- {foreach from=$pictures item=picture name=no}--> 
+        <i class="current"></i> 
+        <!--{/foreach}--> 
+        <!--{/if}-->
+      </ul>
+    </div>
+  </div>
+  <div class="blank2"></div>
+</section>
+<script type="text/javascript">
+TouchSlide({ 
+	slideCell:"#slideBox",
+	titCell:".icons ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+	mainCell:".scroller ul", 
+	effect:"leftLoop", 
+	autoPage:true,//自动分页
+	autoPlay:false //自动播放
+});
+
+function showPic(){
+	var data = document.getElementById("slideBox").className;
+	var reCat = /ui-gallery/;
+	//str1.indexOf(str2);
+	if( reCat.test(data) ){
+		document.getElementById("slideBox").className = 'slideBox';
+	}else{
+		document.getElementById("slideBox").className = 'slideBox ui-gallery';
+		//document.getElementById("slideBox").style.position = 'fixed';
+	}
+}
+</script> 
+<!--房源图 end---> 
+<!--房源参数-->
+<section class="goodsInfo">
+  
+  <div class="title">
+    <h1> {$goods.goods_style_name} </h1>
+  </div>
+  <ul>
+    <!--{if $goods.is_promote and $goods.gmt_end_time } 促销-->
+    <li>{$lang.promote_price}<b class="price">{$goods.promote_price}</b>　<!-- {if $cfg.show_marketprice} 市场价格-->
+    <del>{$goods.market_price}</del> 
+    <!-- {/if} --></li> 
+    
+    <!--{else}-->
+    <li>房租<b class="price">{$goods.shop_price_formated}</b> /月 <b ><a  href="tel:4006674066" class="tel" >预约看房</a></b></li> 
+    <!--{/if}-->  
+	
+  </ul>
+  <!--{if $goods.is_promote and $goods.gmt_end_time } 促销--> 
+  {insert_scripts files='lefttime.js'}
+  <ul>
+    <li> <span class="time">时间剩余：<time class="countdown" id="leftTime">{$lang.please_waiting}</time></span> </li>
+  </ul>
+  <!--{/if}-->
+  <!-- {if $promotion} -->
+  <ul>
+    <li>
+    <!-- {foreach from=$promotion item=item key=key} 优惠活动-->
+    {$lang.activity}
+    <!-- {if $item.type eq "snatch"} -->
+    <a href="snatch.php" title="{$lang.snatch}" class="rule c333">[{$lang.snatch}]</a>
+    <!-- {elseif $item.type eq "group_buy"} -->
+    <a href="group_buy.php" title="{$lang.group_buy}" class="rule c333">[{$lang.group_buy}]</a>
+    <!-- {elseif $item.type eq "auction"} -->
+    <a href="auction.php" title="{$lang.auction}" class="rule c333">[{$lang.auction}]</a>
+    <!-- {elseif $item.type eq "favourable"} -->
+    <a href="activity.php" title="{$lang.favourable}" class="rule c333">[{$lang.favourable}]</a>
+    <!-- {/if} -->
+    <a href="{$item.url}" title="{$lang.$item.type} {$item.act_name}{$item.time}" class="rule c333">{$item.act_name}</a><br />
+    <!-- {/foreach} -->
+    </li>
+  </ul>
+  <!-- {/if} -->
+  
+
+</section>
+
+<!--房源参数 begin-->
+<section class="s-detail">
+  <header>
+    <ul style="position: static;" id="detail_nav">
+      <li id="tabs1" onClick="tab(1)" class="current"> 房源详情 </li>
+    </ul>
+  </header>
+  <div id="tab1" class="">
+    <div class="desc wrap">
+      <div class="blank2"></div>
+      {$goods.goods_shipai}
+    </div>
+  </div>
+  
+      <div class="footcontact">
+        <div class="foot-item">
+            <a  href="tel:4006674066" class="foottel" ><img src="images/f-tel.png" width="25" height="25">&nbsp;预约看房</a>
+        </div>
+        <div class="foot-item">
+            <a href="category.php?id=18" class="btn-block"><img src="images/f-tmore.png" width="25" height="25">&nbsp;看看其它</a>
+        </div>
+    </div>
+</section>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem --> 
+ <div class="blank2" style="height:20px;"></div>
+{insert_scripts files='transport.js,utils.js'}
+</body>
+</html>

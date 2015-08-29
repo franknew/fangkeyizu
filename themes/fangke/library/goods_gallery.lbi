@@ -1,0 +1,22 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div class="mod_picfold clearfix">
+  <div id="detail_main_img" class="imgbox">
+    <div class="layout_wrap">
+      <div class="prodimg"  title="{$goods.goods_name|escape:html}">  <img style="cursor: pointer;width:600px;height:400px;"  id="J_prodImg" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}" /></div>
+      <div class="tabbox clearfix">
+        <div id="detail_img_slider" class="imgtab">
+          <div class="imgtab_clip" id="J_tabSlider">
+            <ul class="imgtab_con">
+              <!-- {if $pictures}--> 
+              <!-- {foreach from=$pictures item=picture name=foo}-->
+              <li {if $smarty.foreach.foo.first}class="cur"{/if}> <img style="cursor: pointer;" url="{$picture.img_url}" src="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" alt="{$goods.goods_name}"></li>
+              <!--{/foreach}--> 
+              <!-- {/if}-->
+            </ul>
+          </div>
+          <div id="detail_imgNextOrPreBtnDiv" class="imgtab_trrigle"> <a href="javascript:void(0);" class="pre_btn"> << </a> <a href="javascript:void(0);" class="next_btn"> >></a> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

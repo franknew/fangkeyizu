@@ -1,0 +1,59 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript">
+var process_request = "{$lang.process_request}";
+</script>
+
+<div class="header ">
+  <div class="headBody">
+    
+    
+    <div class="headNav">
+      <div class="logo"><a href="../index.php" name="top"><img src="../images/logo.png" /></a></div>
+      <div class="subNav">
+        <ul>
+          <li {if $navigator_list.config.index eq 1} class="current"{/if}> <a href="../index.php">{$lang.home}</a></li>
+          <!-- {foreach name=nav_middle_list from=$navigator_list.middle item=nav} -->
+          <li {if $nav.active eq 1} class="current"{/if}><a href="{$nav.url}" {if $nav.opennew eq 1}target="_blank" {/if}>{$nav.name}</a>
+          <!-- {if $nav.cat_list}-->
+<div class='sub_nav'>
+<dl>
+<!--{foreach from=$nav.cat_list item=cat}-->
+<dd>
+<a class="t" href="{$cat.url}">{$cat.name|escape:html}</a>
+</dd>
+<!--{/foreach}-->
+</dl>
+</div>
+<!-- {/if}-->
+          
+          </li>
+          <!-- {/foreach} -->
+        </ul>
+      </div>
+      <div class="rightNav">
+<div class="user_control">
+        <ul>
+          {insert_scripts files='jquery-1.9.1.min.js,jquery.json.js,jquery.SuperSlide.js'}
+          {insert_scripts files='transport.js,utils.js,ecmoban_common.js'} 
+          <font id="ECS_MEMBERZONE" style="display:block; float:left;">{* ECSHOP 提醒您：根据用户id来调用member_info.lbi显示不同的界面  *}{insert name='member_info'} </font>
+          <!--{if $navigator_list.top}-->
+          <li id="topNav" class="clearfix">
+            <!-- {foreach name=nav_top_list from=$navigator_list.top item=nav} -->
+            <a href="{$nav.url}" 
+            <!-- {if $nav.opennew eq 1} -->
+            target="_blank"
+            <!-- {/if} -->
+            >{$nav.name}</a>
+            <!-- {if !$smarty.foreach.nav_top_list.last} -->
+            |
+            <!-- {/if} -->
+            <!-- {/foreach} -->
+          </li>
+          <!-- {/if} -->
+
+        </ul>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
