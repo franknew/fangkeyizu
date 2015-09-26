@@ -56,17 +56,131 @@ if ($_REQUEST['act'] == 'list')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'query')
 {
-    $user_list = user_list();
+    
+    /* 检查权限 */
+    admin_priv('users_manage');
 
-    $smarty->assign('user_list',    $user_list['user_list']);
-    $smarty->assign('filter',       $user_list['filter']);
-    $smarty->assign('record_count', $user_list['record_count']);
-    $smarty->assign('page_count',   $user_list['page_count']);
+    $sql = "SELECT u.user_name, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn, u.office_phone, u.home_phone, u.mobile_phone".
+        " FROM " .$ecs->table('users'). " u LEFT JOIN " . $ecs->table('users') . " u2 ON u.parent_id = u2.user_id WHERE u.user_id='$_GET[id]'";
 
-    $sort_flag  = sort_flag($user_list['filter']);
-    $smarty->assign($sort_flag['tag'], $sort_flag['img']);
+    $row = $db->GetRow($sql);
+    $row['user_name'] = addslashes($row['user_name']);
+    $users  =& init_users();
+    $user   = $users->get_user_info($row['user_name']);
 
-    make_json_result($smarty->fetch('users_list.htm'), '', array('filter' => $user_list['filter'], 'page_count' => $user_list['page_count']));
+    $sql = "SELECT u.user_id, u.sex, u.birthday, u.pay_points, u.rank_points, u.user_rank , u.user_money, u.frozen_money, u.credit_line, u.parent_id, u2.user_name as parent_username, u.qq, u.msn,
+    u.office_phone, u.home_phone, u.mobile_phone".
+        " FROM " .$ecs->table('users'). " u LEFT JOIN " . $ecs->table('users') . " u2 ON u.parent_id = u2.user_id WHERE u.user_id='$_GET[id]'";
+
+    $row = $db->GetRow($sql);
+
+    if ($row)
+    {
+        $user['user_id']        = $row['user_id'];
+        $user['sex']            = $row['sex'];
+        $user['birthday']       = date($row['birthday']);
+        $user['pay_points']     = $row['pay_points'];
+        $user['rank_points']    = $row['rank_points'];
+        $user['user_rank']      = $row['user_rank'];
+        $user['user_money']     = $row['user_money'];
+        $user['frozen_money']   = $row['frozen_money'];
+        $user['credit_line']    = $row['credit_line'];
+        $user['formated_user_money'] = price_format($row['user_money']);
+        $user['formated_frozen_money'] = price_format($row['frozen_money']);
+        $user['parent_id']      = $row['parent_id'];
+        $user['parent_username']= $row['parent_username'];
+        $user['qq']             = $row['qq'];
+        $user['msn']            = $row['msn'];
+        $user['office_phone']   = $row['office_phone'];
+        $user['home_phone']     = $row['home_phone'];
+        $user['mobile_phone']   = $row['mobile_phone'];
+    }
+    else
+    {
+          $link[] = array('text' => $_LANG['go_back'], 'href'=>'users.php?act=list');
+          sys_msg($_LANG['username_invalid'], 0, $links);
+//        $user['sex']            = 0;
+//        $user['pay_points']     = 0;
+//        $user['rank_points']    = 0;
+//        $user['user_money']     = 0;
+//        $user['frozen_money']   = 0;
+//        $user['credit_line']    = 0;
+//        $user['formated_user_money'] = price_format(0);
+//        $user['formated_frozen_money'] = price_format(0);
+     }
+
+    /* 取出注册扩展字段 */
+    $sql = 'SELECT * FROM ' . $ecs->table('reg_fields') . ' WHERE type < 2 AND display = 1 AND id != 6 ORDER BY dis_order, id';
+    $extend_info_list = $db->getAll($sql);
+
+    $sql = 'SELECT reg_field_id, content ' .
+           'FROM ' . $ecs->table('reg_extend_info') .
+           " WHERE user_id = $user[user_id]";
+    $extend_info_arr = $db->getAll($sql);
+
+    $temp_arr = array();
+    foreach ($extend_info_arr AS $val)
+    {
+        $temp_arr[$val['reg_field_id']] = $val['content'];
+    }
+
+    foreach ($extend_info_list AS $key => $val)
+    {
+        switch ($val['id'])
+        {
+            case 1:     $extend_info_list[$key]['content'] = $user['msn']; break;
+            case 2:     $extend_info_list[$key]['content'] = $user['qq']; break;
+            case 3:     $extend_info_list[$key]['content'] = $user['office_phone']; break;
+            case 4:     $extend_info_list[$key]['content'] = $user['home_phone']; break;
+            case 5:     $extend_info_list[$key]['content'] = $user['mobile_phone']; break;
+            default:    $extend_info_list[$key]['content'] = empty($temp_arr[$val['id']]) ? '' : $temp_arr[$val['id']] ;
+        }
+    }
+
+    $smarty->assign('extend_info_list', $extend_info_list);
+
+    /* 当前会员推荐信息 */
+    $affiliate = unserialize($GLOBALS['_CFG']['affiliate']);
+    $smarty->assign('affiliate', $affiliate);
+
+    empty($affiliate) && $affiliate = array();
+
+    if(empty($affiliate['config']['separate_by']))
+    {
+        //推荐注册分成
+        $affdb = array();
+        $num = count($affiliate['item']);
+        $up_uid = "'$_GET[id]'";
+        for ($i = 1 ; $i <=$num ;$i++)
+        {
+            $count = 0;
+            if ($up_uid)
+            {
+                $sql = "SELECT user_id FROM " . $ecs->table('users') . " WHERE parent_id IN($up_uid)";
+                $query = $db->query($sql);
+                $up_uid = '';
+                while ($rt = $db->fetch_array($query))
+                {
+                    $up_uid .= $up_uid ? ",'$rt[user_id]'" : "'$rt[user_id]'";
+                    $count++;
+                }
+            }
+            $affdb[$i]['num'] = $count;
+        }
+        if ($affdb[1]['num'] > 0)
+        {
+            $smarty->assign('affdb', $affdb);
+        }
+    }
+
+
+    assign_query_info();
+    $smarty->assign('ur_here',          '查看会员信息');
+    $smarty->assign('action_link',      array('text' => $_LANG['03_users_list'], 'href'=>'users.php?act=list&' . list_link_postfix()));
+    $smarty->assign('user',             $user);
+    $smarty->assign('form_action',      'query');
+    $smarty->assign('special_ranks',    get_rank_list(true));
+    $smarty->display('user_info.htm');
 }
 
 /*------------------------------------------------------ */

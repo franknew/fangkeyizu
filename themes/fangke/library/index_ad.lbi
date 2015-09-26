@@ -1,11 +1,11 @@
-<link rel="stylesheet" type="text/css" href="js/jquery.jslides.css" media="screen" />
+﻿<link rel="stylesheet" type="text/css" href="js/jquery.jslides.css" media="screen" />
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="js/jquery.jslides.js"></script>
 <!-- SLI -->
 <div id="full-screen-slider">
 	<ul id="slides">
      {foreach from=$playerdb item=row} 
-		<li style="background:url('{$row.src}') no-repeat center top"><a href="{$row.url}" target="_blank">{$row.text}</a></li>
+		<li style="background:url('{$row.src}') no-repeat center top">{$row.text}</li>
 		 {/foreach}
 	</ul>
 </div>

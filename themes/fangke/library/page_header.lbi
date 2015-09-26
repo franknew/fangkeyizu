@@ -1,4 +1,4 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+﻿<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript">
 var process_request = "{$lang.process_request}";
 </script>
@@ -32,7 +32,7 @@ var process_request = "{$lang.process_request}";
       </div>
       <div class="rightNav">
 <div class="user_control">
-        <ul>
+        <ul style="list-style:none;float:left;">
           {insert_scripts files='jquery-1.9.1.min.js,jquery.json.js,jquery.SuperSlide.js'}
           {insert_scripts files='transport.js,utils.js,ecmoban_common.js'} 
           <font id="ECS_MEMBERZONE" style="display:block; float:left;">{* ECSHOP 提醒您：根据用户id来调用member_info.lbi显示不同的界面  *}{insert name='member_info'} </font>

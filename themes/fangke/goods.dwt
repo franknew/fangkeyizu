@@ -66,6 +66,16 @@ $(function(){
 			effect:"leftLoop",
 			pager:true
 	})
+	$("#main_img_slider").slide({
+			mainCell:"#J_mainSlider ul",
+			prevCell:".pre_btn",
+			nextCell:".next_btn",
+			effect:"leftLoop",
+			pager:true,
+			startFun: function(i, c){
+				$("#J_tabSlider ul li img")[i].click();
+			}
+	})
 	/*放大镜缩略图点击选中效果*/
 	$("#J_tabSlider ul li img").click(function(){
 		$("#J_tabSlider ul li").removeClass("cur");

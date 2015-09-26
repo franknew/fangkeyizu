@@ -3,6 +3,7 @@
   <div id="detail_main_img" class="imgbox">
     <div class="layout_wrap">
       <div class="prodimg"  title="{$goods.goods_name|escape:html}">  <img style="cursor: pointer;width:600px;height:400px;"  id="J_prodImg" src="{$goods.goods_img}" alt="{$goods.goods_name|escape:html}" /></div>
+      
       <div class="tabbox clearfix">
         <div id="detail_img_slider" class="imgtab">
           <div class="imgtab_clip" id="J_tabSlider">

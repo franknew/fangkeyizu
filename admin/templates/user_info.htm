@@ -1,11 +1,19 @@
-<!-- $Id: user_info.htm 16854 2009-12-07 06:20:09Z sxc_shop $ -->
+﻿<!-- $Id: user_info.htm 16854 2009-12-07 06:20:09Z sxc_shop $ -->
 {include file="pageheader.htm"}
 <div class="main-div">
 <form method="post" action="users.php" name="theForm" onsubmit="return validate()">
 <table width="100%" >
   <tr>
     <td class="label">{$lang.username}:</td>
-    <td>{if $form_action eq "update"}{$user.user_name}<input type="hidden" name="username" value="{$user.user_name}" />{else}<input type="text" name="username" maxlength="60" value="{$user.user_name}" />{$lang.require_field}{/if}</td>
+    <td>
+      {if $form_action eq "update"}
+      {$user.user_name}
+      <input type="hidden" name="username" value="{$user.user_name}" />
+      {elseif $form_action eq "query"}
+      <input type="text" name="username" value="{$user.user_name}" disabled />
+      {else}
+      <input type="text" name="username" maxlength="60" value="{$user.user_name}" />{$lang.require_field}
+      {/if}</td>
   </tr>
   {if $form_action eq "update"}
   <tr>
@@ -26,10 +34,18 @@
         <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticePayPoints">{$lang.notice_pay_points}</span></td>
   </tr>
   {/if}
+
+  {if $form_action eq "query"}
+  <tr>
+    <td class="label">{$lang.email}:</td>
+    <td><input type="text" name="email" maxlength="60" size="40" value="{$user.email}" disabled/>{$lang.require_field}</td>
+  </tr>
+  {else}
   <tr>
     <td class="label">{$lang.email}:</td>
     <td><input type="text" name="email" maxlength="60" size="40" value="{$user.email}" />{$lang.require_field}</td>
   </tr>
+  {/if}
   {if $form_action eq "insert"}
   <tr>
     <td class="label">{$lang.password}:</td>
@@ -48,31 +64,63 @@
     <td class="label">{$lang.confirm_password}:</td>
     <td><input type="password" name="confirm_password" maxlength="20" size="20" /></td>
   </tr>
+  {elseif $form_action eq "query"}
   {/if}
-  <tr>
-    <td class="label">{$lang.user_rank}:</td>
-    <td><select name="user_rank">
-      <option value="0">{$lang.not_special_rank}</option>
-      {html_options options=$special_ranks selected=$user.user_rank}
-    </select></td>
-  </tr>
-  <tr>
-    <td class="label">{$lang.gender}:</td>
-    <td>{html_radios name="sex" options=$lang.sex checked=$user.sex }</td>
-  </tr>
-  <tr>
-    <td class="label">{$lang.birthday}:</td>
-    <td>{html_select_date field_order="YMD" prefix="birthday" time=$user.birthday start_year="-60" end_year="+1" display_days=true month_format="%m"}</td>
-  </tr>
-  <tr>
-    <td class="label">{$lang.credit_line}:</td>
-    <td><input name="credit_line" type="text" id="credit_line" value="{$user.credit_line}" size="10" /></td>
-  </tr>
+  {if $form_action eq "query"}
+    <tr>
+        <td class="label">{$lang.user_rank}:</td>
+        <td>
+            <select name="user_rank" disabled>
+                <option value="0">{$lang.not_special_rank}</option>
+                {html_options options=$special_ranks selected=$user.user_rank}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label">{$lang.gender}:</td>
+        <td>{html_radios name="sex" options=$lang.sex checked=$user.sex disabled }</td>
+    </tr>
+    <tr>
+        <td class="label">{$lang.birthday}:</td>
+        <td>{html_select_date field_order="YMD" prefix="birthday" time=$user.birthday start_year="-60" end_year="+1" display_days=true month_format="%m" readonly=true}</td>
+    </tr>
+    <tr>
+        <td class="label">{$lang.credit_line}:</td>
+        <td><input name="credit_line" type="text" id="credit_line" value="{$user.credit_line}" size="10" disabled /></td>
+    </tr>
+  {else}
+    <tr>
+        <td class="label">{$lang.user_rank}:</td>
+        <td>
+            <select name="user_rank">
+                <option value="0">{$lang.not_special_rank}</option>
+                {html_options options=$special_ranks selected=$user.user_rank}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td class="label">{$lang.gender}:</td>
+        <td>{html_radios name="sex" options=$lang.sex checked=$user.sex }</td>
+    </tr>
+    <tr>
+        <td class="label">{$lang.birthday}:</td>
+        <td>{html_select_date field_order="YMD" prefix="birthday" time=$user.birthday start_year="-60" end_year="+1" display_days=true month_format="%m"}</td>
+    </tr>
+    <tr>
+        <td class="label">{$lang.credit_line}:</td>
+        <td><input name="credit_line" type="text" id="credit_line" value="{$user.credit_line}" size="10" /></td>
+    </tr>
+  {/if}
+  
   {foreach from=$extend_info_list item=field}
   <tr>
     <td class="label">{$field.reg_field_name}:</td>
     <td>
-    <input name="extend_field{$field.id}" type="text" size="40" class="inputBg" value="{$field.content}"/>
+    {if $form_action eq "query"}
+        <input name="extend_field{$field.id}" type="text" size="40" class="inputBg" value="{$field.content}" disabled />
+    {else}
+        <input name="extend_field{$field.id}" type="text" size="40" class="inputBg" value="{$field.content}" />
+    {/if}
     </td>
   </tr>
   {/foreach}
@@ -109,10 +157,15 @@
   {/if}
   <tr>
     <td colspan="2" align="center">
-      <input type="submit" value="{$lang.button_submit}" class="button" />
-      <input type="reset" value="{$lang.button_reset}" class="button" />
-      <input type="hidden" name="act" value="{$form_action}" />
-      <input type="hidden" name="id" value="{$user.user_id}" />    </td>
+      {if $form_action eq "query"}
+        <input type="button" value="返回" class="button" onclick="linkback();" id="btnBack"/>
+      {else}
+        <input type="submit" value="{$lang.button_submit}" class="button" />
+        <input type="reset" value="{$lang.button_reset}" class="button" />
+        <input type="hidden" name="act" value="{$form_action}" />
+        <input type="hidden" name="id" value="{$user.user_id}" />    
+      {/if}
+    </td>
   </tr>
 </table>
 
@@ -136,6 +189,11 @@ onload = function()
 {
     // 开始检查订单
     startCheckOrder();
+}
+
+function linkback()
+{
+    location.href = "users.php?act=list";
 }
 
 /**

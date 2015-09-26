@@ -222,8 +222,8 @@ box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.05);}
 .subNav ul li.down_nav:hover ul li a{width:133px;height:45px;text-align:center;color:#fff;float:left;}
 .subNav ul li.down_nav ul li a:hover{ }
 .subNav .sample_newIcon{ position:absolute; right:10px; top:-4px; width:29px; height:15px; }
-.rightNav{width:231px;float:right;}
-.rightNav ul{width:231px;float:left;}
+.rightNav{float:right;}
+.rightNav ul{float:left;}
 .rightNav ul li { margin-left:6px;height:45px;line-height:45px;font-size:14px;font-weight:bold; float:left;}
 .rightNav ul li.none{background:none;}
 .rightNav ul li a{height:45px;text-align:right;color:#fff;float:left;  transition:color 0.2s; -moz-transition:color 0.2s; -webkit-transition:color 0.2s;}
@@ -1430,6 +1430,11 @@ background: #f5f5f5;
 .mod_picfold .imgtab .imgtab_con li a:hover, .mod_picfold .imgtab .imgtab_con li.cur a {border-color: #c8c7cc;background-color: #efeff4;}
 
 
+.mod_picfold .imgtab_main li img{width:600px; height:400px; display:block;}
+.mod_picfold .imgtab .imgtab_main {position:relative;width:600px;height:400px;overflow:hidden;}
+.mod_picfold .imgtab_main li{width:400px; margin:0 2px;}
+.mod_picfold .imgtab .imgtab_main li a {width: 600px;height: 400px;border: 1px solid #fff;}
+.mod_picfold .imgtab .imgtab_main li a:hover, .mod_picfold .imgtab .imgtab_main li.cur a {border-color: #c8c7cc;background-color: #efeff4;}
 /**********详情页放大镜 开始************/
 .MagicZoomPlus img{
 	 height:400px;
